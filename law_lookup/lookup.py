@@ -1,12 +1,15 @@
-import re
 import webbrowser
 from . import tokenizer_german_legal_jargon as tok
 from aqt.reviewer import Reviewer
+from aqt import mw
+from aqt.qt import QShortcut, QKeySequence
 from anki.hooks import wrap
 
 class LawLookup:
     def __init__(self):
         self.install_hooks()
+        self.setup_shortcut()
+        self.current_card = None
     
     def get_text_on_front_card(self, card):
         return card.q()
@@ -28,7 +31,7 @@ class LawLookup:
             law = parts[-1]  # Gets 'BGB' from '§ 1 BGB'
             return section_number, law
         return None, None
-            
+    
     def get_reference(self, section_number, law):
         law = law.lower()
         url = f"https://www.gesetze-im-internet.de/{law}/__{section_number}.html"
@@ -41,10 +44,26 @@ class LawLookup:
             section_number, law = self.get_expression_slices(first_reference)
             if section_number and law:
                 self.get_reference(section_number, law)
-        
+    
     def install_hooks(self):
         Reviewer._showQuestion = wrap(Reviewer._showQuestion, self._on_reviewer_show_question, "after")
-        
+    
     def _on_reviewer_show_question(self, reviewer):
         card = reviewer.card
-        self.on_card_show(card)
+        self.current_card = card  # Save the current card
+    
+    def setup_shortcut(self):
+        # Register the shortcut #
+        shortcut = QShortcut(QKeySequence("#"), mw)
+        shortcut.activated.connect(self.open_reference)
+    
+    def open_reference(self):
+        # Ensure that a card is currently being reviewed
+        if self.current_card:
+            card = self.current_card
+            tokens = self.tokenize_front_card(card)
+            first_reference = self.get_first_reference(tokens)
+            if first_reference:
+                section_number, law = self.get_expression_slices(first_reference)
+                if section_number and law:
+                    self.get_reference(section_number, law)
