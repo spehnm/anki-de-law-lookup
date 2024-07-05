@@ -1,6 +1,6 @@
 # LawLookup Addon for Anki
 
-This Anki addon automatically looks up legal references in German law texts and opens the corresponding webpage when a specific shortcut - by default # - is pressed during card review. The addon uses a tokenizer to identify legal references in the front text of a card and opens the corresponding law section on gesetze-im-internet.de. It uses the citation guideline by the German Federal Administrative Court.
+This Anki addon automatically looks up legal references in German law texts and opens the corresponding webpage when a specific shortcut - by default `#` - is pressed during card review. The addon uses a tokenizer to identify legal references in the front text of a card and opens the corresponding law section on gesetze-im-internet.de. It uses the citation guideline by the German Federal Administrative Court.
 
 ## Features (mind that this is the alpha version)
 
@@ -37,7 +37,7 @@ This Anki addon automatically looks up legal references in German law texts and 
 
 If you wish to change the shortcut key, you can modify the `setup_shortcut` method in the `lookup.py` file.
 
-Example to change the shortcut to `Shift+Command+L`:
+Example to change the shortcut to `+`:
 
 ```python
-shortcut = QShortcut(QKeySequence("Shift+Command+L"), mw)
+shortcut = QShortcut(QKeySequence("+"), mw)
