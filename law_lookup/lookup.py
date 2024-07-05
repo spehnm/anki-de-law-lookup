@@ -2,6 +2,7 @@
 
 import re
 import webbrowser
+import tokenizer_german_legal_jargon
 from aqt.reviewer import Reviewer
 from anki.hooks import wrap
 
