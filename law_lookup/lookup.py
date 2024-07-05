@@ -1,8 +1,6 @@
-# law_lookup/lookup.py
-
 import re
 import webbrowser
-import tokenizer_german_legal_jargon as tok
+from . import tokenizer_german_legal_jargon as tok
 from aqt.reviewer import Reviewer
 from anki.hooks import wrap
 
@@ -21,7 +19,7 @@ class LawLookup:
         for token in tokens:
             if token.startswith('§'):
                 return token
-        return None  # If no token starts with '§' we do not have any reference
+        return None  # If no token starts with '§', we do not have any reference
     
     def get_expression_slices(self, first_reference):
         parts = first_reference.split()
@@ -31,19 +29,18 @@ class LawLookup:
             return section_number, law
         return None, None
             
-        
     def get_reference(self, section_number, law):
+        law = law.lower()
         url = f"https://www.gesetze-im-internet.de/{law}/__{section_number}.html"
         webbrowser.open(url)
     
-    def on_card_show(self, card, _old):
+    def on_card_show(self, card):
         tokens = self.tokenize_front_card(card)
         first_reference = self.get_first_reference(tokens)
         if first_reference:
             section_number, law = self.get_expression_slices(first_reference)
             if section_number and law:
                 self.get_reference(section_number, law)
-
         
     def install_hooks(self):
         Reviewer._showQuestion = wrap(Reviewer._showQuestion, self._on_reviewer_show_question, "after")

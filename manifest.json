@@ -1,7 +1,7 @@
 {
 	"id": "anki-de-law-lookup",
 	"name": "DE Law Lookup ",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "Finds and looks up common legal references for german laws",
 	"author": "spehnm",
 	"authorUrl": "https://github.com/spehnm",
