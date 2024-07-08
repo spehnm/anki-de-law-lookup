@@ -35,7 +35,10 @@ class LawLookup:
     def get_reference(self, section_number, law):
         law = law.lower()
         url = f"https://www.gesetze-im-internet.de/{law}/__{section_number}.html"
-        webbrowser.open(url)
+        webbrowser.open(url) 
+        
+    def check_if_valid_url(self, url):
+        pass
     
     def on_card_show(self, card):
         tokens = self.tokenize_front_card(card)
