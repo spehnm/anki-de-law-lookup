@@ -1,4 +1,5 @@
 import webbrowser
+import json
 from . import tokenizer_german_legal_jargon as tok
 from aqt.reviewer import Reviewer
 from aqt import mw
@@ -10,6 +11,11 @@ class LawLookup:
         self.install_hooks()
         self.setup_shortcut()
         self.current_card = None
+        self.law_map = self.load_law_mapping()
+    
+    def load_law_mapping(self):
+        with open("./law_mapping.json", "r") as map:
+            return json.load(map)
     
     def get_text_on_front_card(self, card):
         return card.q()
@@ -36,17 +42,15 @@ class LawLookup:
         law = law.lower()
         url = f"https://www.gesetze-im-internet.de/{law}/__{section_number}.html"
         webbrowser.open(url) 
-        
-    def check_if_valid_url(self, url):
-        pass
     
-    def on_card_show(self, card):
-        tokens = self.tokenize_front_card(card)
-        first_reference = self.get_first_reference(tokens)
-        if first_reference:
-            section_number, law = self.get_expression_slices(first_reference)
-            if section_number and law:
-                self.get_reference(section_number, law)
+    def law_map_lookup(self, law):
+        # Lookup the corresponding value in law_mapping.json
+        return self.law_map.get(law, None)
+    
+    def get_reference(self, section_number, law):
+        law_code = self.law_map_lookup(law)
+        url = f"https://www.gesetze-im-internet.de/{law_code}/__{section_number}.html"
+        webbrowser.open(url)
     
     def install_hooks(self):
         Reviewer._showQuestion = wrap(Reviewer._showQuestion, self._on_reviewer_show_question, "after")
