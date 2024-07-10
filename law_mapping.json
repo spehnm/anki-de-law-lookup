@@ -4,5 +4,21 @@
     "AktG":"aktg",
     "AnfG":"anfg_1999",
     "AO":"ao_1977",
-    "ArbGG":"arbgg"
+    "ArbGG":"arbgg",
+    "BauGB":"bbaug",
+    "BauNVO":"baunvo",
+    "BBG":"bbg_2009",
+    "BBodSchG":"bbodschg",
+    "BBodSchV":"bbodschv_2023",
+    "BeamtStG":"beamtstg",
+    "BetrVG":"betrvg",
+    "BeurkG":"beurkg",
+    "BGB":"bgb",
+    "EGBGB":"bgbeg",
+    "BImSchG":"bimschg",
+    "BMinG":"bming",
+    "BPolG":"bgsg_1994",
+    "BUrlG":"burlg",
+    "BVerfGG":"bverfgg",
+    "BWahlG":"bwahlg"
 }
