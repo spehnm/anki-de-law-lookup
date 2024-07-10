@@ -1,5 +1,6 @@
 import webbrowser
 import json
+import os
 from . import tokenizer_german_legal_jargon as tok
 from aqt.reviewer import Reviewer
 from aqt import mw
@@ -14,8 +15,10 @@ class LawLookup:
         self.law_map = self.load_law_mapping()
     
     def load_law_mapping(self):
-        with open("./law_mapping.json", "r") as map:
-            return json.load(map)
+        script_dir = os.path.dirname(__file__)
+        json_path = os.path.join(script_dir, "law_mapping.json")
+        with open(json_path, "r") as map_file:
+            return json.load(map_file)
     
     def get_text_on_front_card(self, card):
         return card.q()
