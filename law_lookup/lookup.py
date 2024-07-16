@@ -29,30 +29,31 @@ class LawLookup:
     
     def get_first_reference(self, tokens):
         for token in tokens:
-            if token.startswith('§'):
+            if token.startswith('§') or token.startswith('Art.'):
                 return token
-        return None  # If no token starts with '§', we do not have any reference
+        return None  # If no token starts with '§' or 'Art.', we do not have any reference
     
     def get_expression_slices(self, first_reference):
         parts = first_reference.split()
+        uses_paragraph_symbol = True
         if len(parts) >= 3:
-            section_number = parts[1]  # Gets '1' from '§ 1 BGB'
-            law = parts[-1]  # Gets 'BGB' from '§ 1 BGB'
-            return section_number, law
-        return None, None
-    
-    def get_reference(self, section_number, law):
-        law = law.lower()
-        url = f"https://www.gesetze-im-internet.de/{law}/__{section_number}.html"
-        webbrowser.open(url) 
+            section_number = parts[1]  # Gets '1' from '§ 1 BGB' or 'Art. 1 GG'
+            law = parts[-1]  # Gets 'BGB' from '§ 1 BGB' or 'GG' from 'Art. 1 GG'
+            if parts[0] == 'Art.':
+                uses_paragraph_symbol = False
+            return section_number, law, uses_paragraph_symbol
+        return None, None, None
     
     def law_map_lookup(self, law):
         # Lookup the corresponding value in law_mapping.json
         return self.law_map.get(law, None)
     
-    def get_reference(self, section_number, law):
+    def get_reference(self, section_number, law, uses_paragraph_symbol):
         law_code = self.law_map_lookup(law)
-        url = f"https://www.gesetze-im-internet.de/{law_code}/__{section_number}.html"
+        if uses_paragraph_symbol == True:
+            url = f"https://www.gesetze-im-internet.de/{law_code}/__{section_number}.html"
+        else:
+            url = f"https://www.gesetze-im-internet.de/{law_code}/art_{section_number}.html"
         webbrowser.open(url)
     
     def install_hooks(self):
@@ -74,6 +75,6 @@ class LawLookup:
             tokens = self.tokenize_front_card(card)
             first_reference = self.get_first_reference(tokens)
             if first_reference:
-                section_number, law = self.get_expression_slices(first_reference)
-                if section_number and law:
-                    self.get_reference(section_number, law)
+                section_number, law, uses_paragraph_symbol = self.get_expression_slices(first_reference)
+                if section_number and law and uses_paragraph_symbol:
+                    self.get_reference(section_number, law, uses_paragraph_symbol)
