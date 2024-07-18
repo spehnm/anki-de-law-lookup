@@ -99,9 +99,12 @@ def tokenizer_german_legal_texts(text):
             current_element = tokens[index]             
             next_element = tokens[index + 1]        
             # Merge tokens via "§"
-            if current_element.startswith("§"):
+            if current_element.startswith("§") or current_element.startswith("Art."): # Bugfix
                 tokens[index] = current_element + " " + next_element
                 tokens.pop(index + 1)
         except IndexError:
             pass
     return tokens
+
+# Debug-statements
+# print(tokenizer_german_legal_texts("Art. 1 Abs. 1 GG"))
