@@ -1,4 +1,5 @@
 # Use my old GitLab snippet for tokenizing: https://gitlab.com/-/snippets/3622982
+# Mind that this snipped did contain a bug that is fixed here (see Bugfix #1 below)
 
 import re
 
@@ -99,12 +100,9 @@ def tokenizer_german_legal_texts(text):
             current_element = tokens[index]             
             next_element = tokens[index + 1]        
             # Merge tokens via "§"
-            if current_element.startswith("§") or current_element.startswith("Art."): # Bugfix
+            if current_element.startswith("§") or current_element.startswith("Art."): # Bugfix #1
                 tokens[index] = current_element + " " + next_element
                 tokens.pop(index + 1)
         except IndexError:
             pass
     return tokens
-
-# Debug-statements
-# print(tokenizer_german_legal_texts("Art. 1 Abs. 1 GG"))

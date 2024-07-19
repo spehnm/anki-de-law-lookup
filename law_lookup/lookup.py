@@ -39,7 +39,7 @@ class LawLookup:
         if len(parts) >= 3:
             section_number = parts[1]  # Gets '1' from '§ 1 BGB' or 'Art. 1 GG'
             law = parts[-1]  # Gets 'BGB' from '§ 1 BGB' or 'GG' from 'Art. 1 GG'
-            if parts[0] != '§':
+            if parts[0] != '§':  # Effectively, this checks for the 'Art.'
                 uses_paragraph_symbol = False
             return section_number, law, uses_paragraph_symbol
         return None, None, None
@@ -77,5 +77,5 @@ class LawLookup:
             first_reference = self.get_first_reference(tokens)
             if first_reference:
                 section_number, law, uses_paragraph_symbol = self.get_expression_slices(first_reference)
-                if section_number and law:
+                if section_number and law:  # Only check for this, so it opens even if it's an 'Artikel' not a '§'
                     self.get_reference(section_number, law, uses_paragraph_symbol)
