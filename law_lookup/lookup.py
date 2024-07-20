@@ -45,8 +45,20 @@ class LawLookup:
         return None, None, None
     
     def law_map_lookup(self, law):
-        # Lookup the corresponding value in law_mapping.json
-        return self.law_map.get(law, None)
+        """Looks up the citated law in a json that contains the
+        actual type of how the law is formatted in the URL.
+
+        Args:
+            law (string): gets the string from the
+            get_expression_slices methode (2nd return value)
+
+        Returns:
+            string: depending on if the law was found in the
+            json it returns the corresponding string to insert
+            it into the URL later, otherwise it just returns
+            the original string
+        """
+        return self.law_map.get(law, law)
     
     def get_reference(self, section_number, law, uses_paragraph_symbol):
         law_code = self.law_map_lookup(law)
