@@ -16,15 +16,16 @@ class LawLookup:
     
     def load_law_mapping(self):
         """Loads the law map json, which contains the format the citated law
-        is quoted in the URL
+        is quoted in the URL. Now explicitly uses the utf-8-enconding.
 
         Returns:
             json: contains the format
         """
         script_dir = os.path.dirname(__file__)
         json_path = os.path.join(script_dir, "law_mapping.json")
-        with open(json_path, "r") as map_file:
+        with open(json_path, "r", encoding="utf-8") as map_file:  # Bugfix
             return json.load(map_file)
+
     
     def get_text_on_front_card(self, card):
         return card.q()
