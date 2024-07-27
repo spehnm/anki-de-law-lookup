@@ -33,7 +33,7 @@ def token_merger(tokens, merge_word):
 def token_merge_iteration(tokens):
     """Merges tokens for each word in merge_word list
     (containing all citation rules from the Federal Administrative Court of Germany)
-
+    
     Args:
         tokens (list): list filled with regular expressions from the tokenizer_german_legal_texts function
     """
@@ -41,8 +41,14 @@ def token_merge_iteration(tokens):
                    "Halbs.", "Buchstabe", "Doppelbuchstabe", "Alt."]
     for i in merge_words:
         token_merger(tokens, i)
-        
-def tokenizer_german_legal_texts(text):
+
+def check_for_citation_style(text):
+    follows_bverwg_guideline = True
+    # Implement logic here -> scan for roman numerals!
+    # Maybe add the abbreviation for "Satz" ("S.") into regex below?
+    return follows_bverwg_guideline
+
+def tokenizer_german_legal_texts(text):  # Here we should have checked for the citation style!
     """Creates legal-context-sensitive tokens
     
     Args:
