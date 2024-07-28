@@ -2,9 +2,6 @@
 
 This Anki addon automatically looks up legal references in German law texts and opens the corresponding webpage when a specific shortcut - by default `#` - is pressed during card review. The addon uses a tokenizer to identify legal references in the front text of a card and opens the corresponding law section on gesetze-im-internet.de. It uses the citation guideline by the German Federal Administrative Court.
 
-## Disclaimer
-Currently, the launch version does only work on Windows. I'm fixing a bug appearing at least on macOS. I don't got further information about other linux distros.
-
 ## Features (mind that this is the launch version)
 
 - Identifies legal references in German legal texts, if you followed the German Federal Administrative Court citation style.

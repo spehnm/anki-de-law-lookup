@@ -42,13 +42,23 @@ def token_merge_iteration(tokens):
     for i in merge_words:
         token_merger(tokens, i)
 
-def check_for_citation_style(text):
+def check_for_citation_style(text):  # Add documentation
     follows_bverwg_guideline = True
-    # Implement logic here -> scan for roman numerals!
-    # Maybe add the abbreviation for "Satz" ("S.") into regex below?
+    roman_numerals = [" I ", " II ", " III ", " IIII ", " IV ", " V ",
+                      " VI ", " VII ", " VIII ", " IX ", " X ",
+                      " L ", " D ", " M "]
+
+    for numeral in roman_numerals:
+        if numeral in text:
+            follows_bverwg_guideline = False
+            break
+
     return follows_bverwg_guideline
 
-def tokenizer_german_legal_texts(text):  # Here we should have checked for the citation style!
+def replace_roman_numerals(text):
+    pass
+
+def tokenizer_german_legal_texts(text):
     """Creates legal-context-sensitive tokens
     
     Args:
