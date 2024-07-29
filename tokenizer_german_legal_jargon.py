@@ -42,18 +42,11 @@ def token_merge_iteration(tokens):
     for i in merge_words:
         token_merger(tokens, i)
 
-def check_for_citation_style(text):  # Add documentation
-    follows_bverwg_guideline = True
-    roman_numerals = [" I ", " II ", " III ", " IIII ", " IV ", " V ",
-                      " VI ", " VII ", " VIII ", " IX ", " X ",
-                      " L ", " D ", " M "]
-
-    for numeral in roman_numerals:
-        if numeral in text:
-            follows_bverwg_guideline = False
-            break
-
-    return follows_bverwg_guideline
+def check_for_citation_style(text):  # Also check for abbreviation
+    roman_numeral_pattern = r'\b[IVXLCDM]+\b'
+    follows_bverwg_guideline = re.search(roman_numeral_pattern,
+                                         text, re.IGNORECASE)
+    return bool(follows_bverwg_guideline)
 
 def replace_roman_numerals(text):
     pass
