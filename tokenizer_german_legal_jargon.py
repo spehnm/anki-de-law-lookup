@@ -42,13 +42,16 @@ def token_merge_iteration(tokens):
     for i in merge_words:
         token_merger(tokens, i)
 
-def check_for_citation_style(text):  # Also check for abbreviation
+def check_for_citation_style(text):
     roman_numeral_pattern = r'\b[IVXLCDM]+\b'
-    follows_bverwg_guideline = re.search(roman_numeral_pattern,
-                                         text, re.IGNORECASE)
-    return bool(follows_bverwg_guideline)
+    abbreviation_satz = r'\bS\.\b'
+    if re.search(roman_numeral_pattern, text, re.IGNORECASE):
+        return False
+    if re.search(abbreviation_satz, text, re.IGNORECASE):
+        return False
+    return True
 
-def replace_roman_numerals(text):
+def reformat_string(text):
     pass
 
 def tokenizer_german_legal_texts(text):
