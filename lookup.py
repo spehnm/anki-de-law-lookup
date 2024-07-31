@@ -40,7 +40,11 @@ class LawLookup:
             list: containing strings following the regex from our tokenizter module
         """
         text = self.get_text_on_front_card(card)
-        return tok.tokenizer_german_legal_texts(text)
+        default_citation_style = tok.check_for_citation_style(text)
+        if default_citation_style:
+            return tok.tokenizer_german_legal_texts(text)
+        else:
+            pass
     
     def get_first_reference(self, tokens):
         """Gets the first reference that startswith '§' or 'Art.'

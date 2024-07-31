@@ -43,6 +43,14 @@ def token_merge_iteration(tokens):
         token_merger(tokens, i)
 
 def check_for_citation_style(text):
+    """Checks for citation style
+
+    Args:
+        text (string): this will be the cards front side when called in our main module
+
+    Returns:
+        bool: boolean value depending on regex search
+    """
     roman_numeral_pattern = r'\b[IVXLCDM]+\b'
     abbreviation_satz = r'\bS\.\b'
     if re.search(roman_numeral_pattern, text, re.IGNORECASE):
