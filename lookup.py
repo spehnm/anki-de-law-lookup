@@ -131,7 +131,11 @@ class LawLookup:
     def open_reference(self):  # Wraps our methods together
         if self.current_card:
             card = self.current_card
-            tokens = self.tokenize_front_card(card)
+            uses_bverwg_style = tok.check_for_citation_style(card)
+            if uses_bverwg_style:
+                tokens = self.tokenize_front_card(card)
+            else:
+                tok.reformat_string(card)
             first_reference = self.get_first_reference(tokens)
             if first_reference:
                 section_number, law, uses_paragraph_symbol = self.get_expression_slices(first_reference)
