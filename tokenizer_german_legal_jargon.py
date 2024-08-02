@@ -60,7 +60,9 @@ def check_for_citation_style(text):
     return True
 
 def reformat_string(text):
-    pass
+    text = re.sub(r'\b[IVXLCDM]+\b', "Abs. 1", text, flags=re.IGNORECASE)
+    text = re.sub(r'\bS\.\b', 'Satz', text, flags=re.IGNORECASE)
+    return text
 
 def tokenizer_german_legal_texts(text):
     """Creates legal-context-sensitive tokens
