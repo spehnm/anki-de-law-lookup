@@ -131,7 +131,7 @@ class LawLookup:
     def open_reference(self):  # Wraps our methods together
         if self.current_card:
             card = self.current_card
-            uses_bverwg_style = tok.check_for_citation_style(card)
+            uses_bverwg_style = tok.check_for_citation_style(card)  # Here we account for different citation styles
             if uses_bverwg_style:
                 tokens = self.tokenize_front_card(card)
             else:

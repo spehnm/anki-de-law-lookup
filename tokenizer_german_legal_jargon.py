@@ -1,4 +1,4 @@
-# Use my old GitLab snippet for tokenizing: https://gitlab.com/-/snippets/3622982
+# Used my old GitLab snippet for tokenizing: https://gitlab.com/-/snippets/3622982
 # Mind that this snipped did contain a bug that is fixed here (see Bugfix #1 below)
 
 import re
@@ -60,6 +60,14 @@ def check_for_citation_style(text):
     return True
 
 def reformat_string(text):
+    """Reformats the given string to fit for the following tokenization.
+
+    Args:
+        text (string): will be fetched using the anki api in the lookup-module
+
+    Returns:
+        string: cleared the text from roman numerals and the abbreviation for "Satz"
+    """
     text = re.sub(r'\b[IVXLCDM]+\b', "Abs. 1", text, flags=re.IGNORECASE)
     text = re.sub(r'\bS\.\b', 'Satz', text, flags=re.IGNORECASE)
     return text
