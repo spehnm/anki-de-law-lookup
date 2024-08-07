@@ -52,7 +52,7 @@ def check_for_citation_style(text):
         bool: boolean value depending on regex search
     """
     roman_numeral_pattern = r'\b[IVXLCDM]+\b'
-    abbreviation_satz = r'\bS\.\b'
+    abbreviation_satz = r'\bS\.\s?\d+\b'
     if re.search(roman_numeral_pattern, text, re.IGNORECASE):
         return False
     if re.search(abbreviation_satz, text, re.IGNORECASE):
@@ -69,7 +69,7 @@ def reformat_string(text):
         string: cleared the text from roman numerals and the abbreviation for "Satz"
     """
     text = re.sub(r'\b[IVXLCDM]+\b', "Abs. 1", text, flags=re.IGNORECASE)
-    text = re.sub(r'\bS\.\b', 'Satz', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bS\.\s?\d+\b', 'Satz 1', text, flags=re.IGNORECASE)
     return text
 
 def tokenizer_german_legal_texts(text):
@@ -128,7 +128,7 @@ def tokenizer_german_legal_texts(text):
         try:
             # Define variables to merge via indices
             current_element = tokens[index]             
-            next_element = tokens[index + 1]        
+            next_element = tokens[index + 1]
             # Merge tokens via "§"
             if current_element.startswith("§") or current_element.startswith("Art."): # Bugfix #1
                 tokens[index] = current_element + " " + next_element
